@@ -1,9 +1,9 @@
 import bpy
-from . import example_panel
+from . import panels
 
 
 classes = (
-    example_panel.ExamplePanel,
+    panels.ExamplePanel,
 )
 
 
