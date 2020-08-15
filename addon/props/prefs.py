@@ -1,4 +1,5 @@
 import bpy
+from .. import ui
 from .. import utils
 
 
@@ -8,7 +9,7 @@ class AddonPrefs(bpy.types.AddonPreferences):
     panel_category: bpy.props.StringProperty(
         name='Panel Category',
         description='What category to show addon panels in, leave empty to hide them entirely',
-        default='Example',
+        default=ui.panels.BasePanel.bl_category,
         update=utils.ui.update_panel_category,
     )
 
