@@ -30,8 +30,8 @@ def draw_bool(layout, text, data, prop):
     col.prop(data, prop, text='')
 
 
-def draw_op(layout, text, operator, options={}):
+def draw_op(layout, text, operator, **kwargs):
     op = layout.operator(operator, text=text)
 
-    for key, value in options.items():
-        op[key] = value
+    for key, value in kwargs.items():
+        setattr(op, key, value)
