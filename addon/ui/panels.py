@@ -16,4 +16,4 @@ class ExamplePanel(BasePanel, bpy.types.Panel):
         column = self.layout.column()
 
         box = column.box()
-        utils.ui.draw_op(box, 'Useless Button', 'example.example_operator')
+        utils.ui.draw_op(box, 'Useful Button', 'example.example_operator', axis='Z')
