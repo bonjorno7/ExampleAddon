@@ -17,7 +17,7 @@ bl_info = {
     'author': 'bonjorno7',
     'description': 'Example addon for Blender',
     'blender': (2, 80, 0),
-    'version': (0, 0, 3),
+    'version': (0, 0, 4),
     'category': '3D View',
     'location': 'View3D',
 }
