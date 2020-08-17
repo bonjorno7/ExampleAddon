@@ -14,7 +14,7 @@ def write_status_and_header(self):
     bpy.context.area.header_text_set(self.header)
 
 
-def clear_status_and_header(self):
+def clear_status_and_header():
     bpy.context.workspace.status_text_set(None)
     bpy.context.area.header_text_set(None)
 

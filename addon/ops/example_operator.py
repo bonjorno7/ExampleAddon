@@ -107,13 +107,14 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def finish(self, context):
-        utils.ops.clear_status_and_header(self)
+        utils.ops.clear_status_and_header()
         self.report({'INFO'}, 'Finished')
         return {'FINISHED'}
 
 
     def cancel(self, context):
         self.restore(context)
-        utils.ops.clear_status_and_header(self)
+
+        utils.ops.clear_status_and_header()
         self.report({'INFO'}, 'Cancelled')
         return {'CANCELLED'}
