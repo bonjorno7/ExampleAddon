@@ -1,4 +1,4 @@
-import bpy
+import bpy, bgl, blf, gpu, gpu_extras
 from .. import utils
 
 
@@ -53,7 +53,7 @@ class ExampleOperator(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        return context.mode == 'OBJECT' and context.object
+        return context.area.type == 'VIEW_3D' and context.mode == 'OBJECT' and context.object
 
 
     @utils.safety.invoke
@@ -61,7 +61,8 @@ class ExampleOperator(bpy.types.Operator):
         self.location = context.object.location.copy()
         self.offset = 0
 
-        utils.ops.write_status_and_header(self)
+        self.draw_handler_2d = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback_2d, (context, ), 'WINDOW', 'POST_PIXEL')
+        self.draw_handler_3d = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback_3d, (context, ), 'WINDOW', 'POST_VIEW')
         context.window_manager.modal_handler_add(self)
         return {'RUNNING_MODAL'}
 
@@ -72,9 +73,11 @@ class ExampleOperator(bpy.types.Operator):
             return {'PASS_THROUGH'}
 
         elif event.type in {'LEFTMOUSE', 'SPACE'}:
+            self.report({'INFO'}, 'Finished')
             return self.finish(context)
 
         elif event.type in {'RIGHTMOUSE', 'ESC'}:
+            self.report({'INFO'}, 'Cancelled')
             return self.cancel(context)
 
         elif event.type == 'MOUSEMOVE':
@@ -98,6 +101,7 @@ class ExampleOperator(bpy.types.Operator):
             raise Exception('Example Exception')
 
         utils.ops.write_status_and_header(self)
+        context.area.tag_redraw()
         return {'RUNNING_MODAL'}
 
 
@@ -109,18 +113,39 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def finish(self, context):
-        utils.ops.clear_status_and_header()
-        self.report({'INFO'}, 'Finished')
+        self.cleanup(context)
         return {'FINISHED'}
 
 
     def cancel(self, context):
         self.restore(context)
-
-        utils.ops.clear_status_and_header()
-        self.report({'INFO'}, 'Cancelled')
+        self.cleanup(context)
         return {'CANCELLED'}
 
 
     def restore(self, context):
         context.object.location = self.location
+
+
+    def cleanup(self, context):
+        if getattr(self, 'draw_handler_2d', None):
+            self.draw_handler_2d = bpy.types.SpaceView3D.draw_handler_remove(self.draw_handler_2d, 'WINDOW')
+
+        if getattr(self, 'draw_handler_3d', None):
+            self.draw_handler_3d = bpy.types.SpaceView3D.draw_handler_remove(self.draw_handler_3d, 'WINDOW')
+
+        utils.ops.clear_status_and_header()
+
+
+    def draw_callback_2d(self, context):
+        font_id = 0
+        blf.position(font_id, 15, 30, 0)
+        blf.size(font_id, 20, 72)
+        blf.draw(font_id, context.object.name)
+
+
+    def draw_callback_3d(self, context):
+        font_id = 0
+        blf.position(font_id, 2, 2, 0)
+        blf.size(font_id, 20, 72)
+        blf.draw(font_id, context.object.name)
