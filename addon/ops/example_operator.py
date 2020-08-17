@@ -56,6 +56,7 @@ class ExampleOperator(bpy.types.Operator):
         return context.mode == 'OBJECT' and context.object
 
 
+    @utils.safety.invoke
     def invoke(self, context, event):
         self.location = context.object.location.copy()
         self.offset = 0
@@ -65,6 +66,7 @@ class ExampleOperator(bpy.types.Operator):
         return {'RUNNING_MODAL'}
 
 
+    @utils.safety.modal
     def modal(self, context, event):
         if event.type == 'MIDDLEMOUSE':
             return {'PASS_THROUGH'}
@@ -92,10 +94,14 @@ class ExampleOperator(bpy.types.Operator):
             self.restore(context)
             self.execute(context)
 
+        elif event.type == 'Z' and event.value == 'PRESS':
+            raise Exception('Example Exception')
+
         utils.ops.write_status_and_header(self)
         return {'RUNNING_MODAL'}
 
 
+    @utils.safety.execute
     def execute(self, context):
         index = 'XYZ'.index(self.axis)
         context.object.location[index] += self.offset
