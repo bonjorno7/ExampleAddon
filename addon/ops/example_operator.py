@@ -96,10 +96,6 @@ class ExampleOperator(bpy.types.Operator):
         return {'RUNNING_MODAL'}
 
 
-    def restore(self, context):
-        context.object.location = self.location
-
-
     def execute(self, context):
         index = 'XYZ'.index(self.axis)
         context.object.location[index] += self.offset
@@ -118,3 +114,7 @@ class ExampleOperator(bpy.types.Operator):
         utils.ops.clear_status_and_header()
         self.report({'INFO'}, 'Cancelled')
         return {'CANCELLED'}
+
+
+    def restore(self, context):
+        context.object.location = self.location
