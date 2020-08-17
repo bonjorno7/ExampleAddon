@@ -2,6 +2,7 @@ from . import props
 from . import icons
 from . import ops
 from . import ui
+from . import keymaps
 
 
 modules = (
@@ -9,6 +10,7 @@ modules = (
     icons,
     ops,
     ui,
+    keymaps,
 )
 
 
