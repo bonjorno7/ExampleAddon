@@ -32,6 +32,7 @@ class ExampleOperator(bpy.types.Operator):
         return utils.ops.description(
             'Example modal operator that moves the active object',
             'Use bl_description if your tooltip is static',
+            f'Axis: {properties.axis}',
         )
 
 
@@ -57,6 +58,7 @@ class ExampleOperator(bpy.types.Operator):
 
     def invoke(self, context, event):
         self.location = context.object.location.copy()
+        self.offset = 0
 
         utils.ops.write_status_and_header(self)
         context.window_manager.modal_handler_add(self)
