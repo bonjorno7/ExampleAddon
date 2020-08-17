@@ -1,9 +1,11 @@
 import bpy
 from . import panels
+from . import pies
 
 
 classes = (
     panels.ExamplePanel,
+    pies.ExamplePie,
 )
 
 
