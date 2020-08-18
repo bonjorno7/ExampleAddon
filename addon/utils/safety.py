@@ -1,4 +1,5 @@
 import traceback
+import functools
 
 
 def respond(self, context):
@@ -14,6 +15,7 @@ def respond(self, context):
 
 
 def execute(method):
+    @functools.wraps(method)
     def wrapper(self, context):
         try:
             return method(self, context)
@@ -24,6 +26,7 @@ def execute(method):
 
 
 def invoke(method):
+    @functools.wraps(method)
     def wrapper(self, context, event):
         try:
             return method(self, context, event)
@@ -34,6 +37,7 @@ def invoke(method):
 
 
 def modal(method):
+    @functools.wraps(method)
     def wrapper(self, context, event):
         try:
             return method(self, context, event)
