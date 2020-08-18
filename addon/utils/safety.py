@@ -14,17 +14,6 @@ def respond(self, context):
     return {'CANCELLED'}
 
 
-def execute(method):
-    @functools.wraps(method)
-    def wrapper(self, context):
-        try:
-            return method(self, context)
-        except:
-            return respond(self, context)
-
-    return wrapper
-
-
 def invoke(method):
     @functools.wraps(method)
     def wrapper(self, context, event):
@@ -41,6 +30,17 @@ def modal(method):
     def wrapper(self, context, event):
         try:
             return method(self, context, event)
+        except:
+            return respond(self, context)
+
+    return wrapper
+
+
+def execute(method):
+    @functools.wraps(method)
+    def wrapper(self, context):
+        try:
+            return method(self, context)
         except:
             return respond(self, context)
 
