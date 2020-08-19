@@ -2,7 +2,7 @@ import traceback
 import functools
 
 
-def respond(self, context):
+def respond(self, context, event=None):
     self.report({'ERROR'}, traceback.format_exc())
 
     if hasattr(self, 'cancel'):
