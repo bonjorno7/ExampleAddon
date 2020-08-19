@@ -65,6 +65,7 @@ class ExampleOperator(bpy.types.Operator):
         self.location = context.object.location.copy()
         self.offset = 0
 
+        self.set_status(context)
         self.draw_handler_2d = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback_2d, (context, ), 'WINDOW', 'POST_PIXEL')
         self.draw_handler_3d = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback_3d, (context, ), 'WINDOW', 'POST_VIEW')
         context.window_manager.modal_handler_add(self)
@@ -104,7 +105,7 @@ class ExampleOperator(bpy.types.Operator):
         elif event.type == 'Z' and event.value == 'PRESS':
             raise Exception('Example Exception')
 
-        utils.ops.write_status_and_header(self)
+        self.set_header(context)
         context.area.tag_redraw()
         return {'RUNNING_MODAL'}
 
@@ -132,13 +133,15 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def cleanup(self, context):
+        context.workspace.status_text_set(None)
+        context.area.header_text_set(None)
+
         if getattr(self, 'draw_handler_2d', None):
             self.draw_handler_2d = bpy.types.SpaceView3D.draw_handler_remove(self.draw_handler_2d, 'WINDOW')
 
         if getattr(self, 'draw_handler_3d', None):
             self.draw_handler_3d = bpy.types.SpaceView3D.draw_handler_remove(self.draw_handler_3d, 'WINDOW')
 
-        utils.ops.clear_status_and_header()
 
 
     def draw_callback_2d(self, context):
