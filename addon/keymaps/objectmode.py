@@ -12,4 +12,4 @@ def register(keyconfig):
     item.properties.axis = 'Y'
 
     item = keymap.keymap_items.new('wm.call_menu_pie', 'W', 'PRESS')
-    item.properties.name = 'EXAMPLE_MT_ExampleMenu'
+    item.properties.name = 'EXAMPLE_MT_ExamplePie'
