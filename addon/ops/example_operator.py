@@ -36,12 +36,14 @@ class ExampleOperator(bpy.types.Operator):
         )
 
 
-    @staticmethod
-    def status(header, context):
-        layout = header.layout
-        layout.label(text='Move Object', icon='MOUSE_MOVE')
-        layout.label(text='Cycle Axes', icon='EVENT_X')
+    def set_status(self, context):
+        def status(header, context):
+            layout = header.layout
+            layout.label(text=f'Offset: {self.offset:.3}', icon='MOUSE_MOVE')
+            layout.label(text=f'Axis: {self.axis}', icon='EVENT_X')
+            utils.ops.statistics(header, context)
 
+        context.workspace.status_text_set(status)
 
     @property
     def header(self):
