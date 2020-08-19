@@ -3,8 +3,8 @@ from .. import utils
 
 
 class ExamplePie(bpy.types.Menu):
-    bl_idname = 'EXAMPLE_MT_ExampleMenu'
-    bl_label = 'Example Menu'
+    bl_idname = 'EXAMPLE_MT_ExamplePie'
+    bl_label = 'Example Pie'
 
     def draw(self, context):
         pie = self.layout.menu_pie()
