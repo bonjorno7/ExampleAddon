@@ -142,6 +142,7 @@ class ExampleOperator(bpy.types.Operator):
         if getattr(self, 'draw_handler_3d', None):
             self.draw_handler_3d = bpy.types.SpaceView3D.draw_handler_remove(self.draw_handler_3d, 'WINDOW')
 
+        context.area.tag_redraw()
 
 
     def draw_callback_2d(self, context):
