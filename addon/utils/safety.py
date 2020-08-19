@@ -14,34 +14,19 @@ def respond(self, context, event=None):
     return {'CANCELLED'}
 
 
-def invoke(method):
-    @functools.wraps(method)
-    def wrapper(self, context, event):
+def decorator(method):
+    wraps = functools.wraps(method)
+
+    def wrapper(*args):
         try:
-            return method(self, context, event)
+            return method(*args)
         except:
-            return respond(self, context)
+            return respond(*args)
 
-    return wrapper
+    if method.__name__ in {'invoke', 'modal'}:
+        return wraps(lambda self, context, event: wrapper(self, context, event))
 
+    elif method.__name__ == 'execute':
+        return wraps(lambda self, context: wrapper(self, context))
 
-def modal(method):
-    @functools.wraps(method)
-    def wrapper(self, context, event):
-        try:
-            return method(self, context, event)
-        except:
-            return respond(self, context)
-
-    return wrapper
-
-
-def execute(method):
-    @functools.wraps(method)
-    def wrapper(self, context):
-        try:
-            return method(self, context)
-        except:
-            return respond(self, context)
-
-    return wrapper
+    raise Exception('This decorator is only for invoke, modal, and execute')
