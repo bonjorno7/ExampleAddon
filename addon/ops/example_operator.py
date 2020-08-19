@@ -60,7 +60,7 @@ class ExampleOperator(bpy.types.Operator):
         return context.area.type == 'VIEW_3D' and context.mode == 'OBJECT' and context.object
 
 
-    @utils.safety.invoke
+    @utils.safety.decorator
     def invoke(self, context, event):
         self.location = context.object.location.copy()
         self.offset = 0
@@ -72,7 +72,7 @@ class ExampleOperator(bpy.types.Operator):
         return {'RUNNING_MODAL'}
 
 
-    @utils.safety.modal
+    @utils.safety.decorator
     def modal(self, context, event):
         if event.type == 'MIDDLEMOUSE':
             return {'PASS_THROUGH'}
@@ -110,7 +110,7 @@ class ExampleOperator(bpy.types.Operator):
         return {'RUNNING_MODAL'}
 
 
-    @utils.safety.execute
+    @utils.safety.decorator
     def execute(self, context):
         index = 'XYZ'.index(self.axis)
         context.object.location[index] += self.offset
