@@ -45,12 +45,14 @@ class ExampleOperator(bpy.types.Operator):
 
         context.workspace.status_text_set(status)
 
-    @property
-    def header(self):
-        return utils.ops.header(
+
+    def set_header(self, context):
+        header = utils.ops.header(
             f'Axis: {self.axis}',
             f'Offset: {self.offset:.3}',
         )
+
+        context.area.header_text_set(header)
 
 
     @classmethod
