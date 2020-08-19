@@ -9,6 +9,13 @@ def header(*args):
     return ' | '.join(args)
 
 
+def statistics(header, context):
+    if bpy.app.version < (2, 90, 0):
+        layout = header.layout
+        layout.separator_spacer()
+
+        text = context.scene.statistics(context.view_layer)
+        layout.label(text=text, translate=False)
 
 
 def cursor_warp(event):
