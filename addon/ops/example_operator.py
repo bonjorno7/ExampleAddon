@@ -77,6 +77,9 @@ class ExampleOperator(bpy.types.Operator):
         if event.type == 'MIDDLEMOUSE':
             return {'PASS_THROUGH'}
 
+        if event.alt and not event.ascii:
+            return {'PASS_THROUGH'}
+
         elif event.type in {'LEFTMOUSE', 'SPACE'}:
             self.report({'INFO'}, 'Finished')
             return self.finish(context)
