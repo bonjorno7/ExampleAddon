@@ -1,5 +1,4 @@
 import bpy
-from .. import utils
 
 
 class BasePanel:
@@ -13,7 +12,7 @@ class ExamplePanel(BasePanel, bpy.types.Panel):
     bl_label = 'Example Panel'
 
     def draw(self, context):
-        column = self.layout.column()
+        layout = self.layout
 
-        box = column.box()
-        utils.ui.draw_op(box, 'Useful Button', 'example.example_operator', axis='Z')
+        op = layout.operator('example.example_operator', text='Useful Button')
+        op.axis = 'Z'
