@@ -48,6 +48,7 @@ class ExampleOperator(bpy.types.Operator):
             layout = header.layout
             layout.label(text=f'Offset: {self.offset:.3}', icon='MOUSE_MOVE')
             layout.label(text=f'Axis: {self.axis}', icon='EVENT_X')
+            layout.label(text='Error', icon='EVENT_Z')
             utils.ui.statistics(header, context)
 
         context.workspace.status_text_set(status)
