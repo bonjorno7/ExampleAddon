@@ -36,7 +36,7 @@ class ExampleOperator(bpy.types.Operator):
 
     @classmethod
     def description(cls, context, properties):
-        return utils.ops.description(
+        return utils.ui.description(
             'Example modal operator that moves the active object',
             'Use bl_description if your tooltip is static',
             f'Axis: {properties.axis}',
@@ -48,13 +48,13 @@ class ExampleOperator(bpy.types.Operator):
             layout = header.layout
             layout.label(text=f'Offset: {self.offset:.3}', icon='MOUSE_MOVE')
             layout.label(text=f'Axis: {self.axis}', icon='EVENT_X')
-            utils.ops.statistics(header, context)
+            utils.ui.statistics(header, context)
 
         context.workspace.status_text_set(status)
 
 
     def set_header(self, context):
-        header = utils.ops.header(
+        header = utils.ui.header(
             f'Axis: {self.axis}',
             f'Offset: {self.offset:.3}',
         )
