@@ -27,6 +27,13 @@ class ExampleOperator(bpy.types.Operator):
     )
 
 
+    checkbox: bpy.props.BoolProperty(
+        name='Checkbox',
+        description='True or False',
+        default=True,
+    )
+
+
     @classmethod
     def description(cls, context, properties):
         return utils.ops.description(
@@ -53,6 +60,16 @@ class ExampleOperator(bpy.types.Operator):
         )
 
         context.area.header_text_set(header)
+
+
+    def draw(self, context):
+        layout = self.layout
+        layout.use_property_split = True
+        layout.use_property_decorate = False
+
+        layout.prop(self, 'axis')
+        layout.prop(self, 'offset')
+        layout.prop(self, 'checkbox')
 
 
     @classmethod
