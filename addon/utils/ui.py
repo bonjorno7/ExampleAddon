@@ -13,25 +13,3 @@ def update_panel_category(self, context):
 
             bpy.utils.unregister_class(cls)
             bpy.utils.register_class(cls)
-
-
-def draw_prop(layout, text, data, prop):
-    row = layout.row()
-    row.label(text=text)
-    row.prop(data, prop, text='')
-
-
-def draw_bool(layout, text, data, prop):
-    row = layout.row()
-    row.label(text=text)
-
-    col = row.column()
-    col.alignment = 'RIGHT'
-    col.prop(data, prop, text='')
-
-
-def draw_op(layout, text, operator, **kwargs):
-    op = layout.operator(operator, text=text)
-
-    for key, value in kwargs.items():
-        setattr(op, key, value)
