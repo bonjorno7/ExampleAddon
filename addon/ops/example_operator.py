@@ -81,6 +81,7 @@ class ExampleOperator(bpy.types.Operator):
     @utils.safety.decorator
     def invoke(self, context, event):
         self.location = context.object.location.copy()
+        self.buffer = 0
         self.offset = 0
 
         self.set_status(context)
@@ -111,7 +112,10 @@ class ExampleOperator(bpy.types.Operator):
 
             delta = event.mouse_x - event.mouse_prev_x
             delta *= 0.001 if event.shift else 0.01
-            self.offset += delta
+            self.buffer += delta
+
+            digits = 2 if not event.ctrl else 1 if event.shift else 0
+            self.offset = round(self.buffer, digits)
 
             self.restore(context)
             self.execute(context)
