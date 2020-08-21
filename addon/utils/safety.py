@@ -3,13 +3,12 @@ import functools
 
 
 def respond(self, context, event=None):
-    self.report({'ERROR'}, traceback.format_exc())
-
-    if hasattr(self, 'cancel'):
-        try:
-            self.cancel(context)
-        except:
-            self.report({'ERROR'}, traceback.format_exc())
+    try:
+        self.cancel(context)
+    except:
+        self.report({'ERROR'}, traceback.format_exc())
+    else:
+        self.report({'ERROR'}, traceback.format_exc())
 
     return {'CANCELLED'}
 
