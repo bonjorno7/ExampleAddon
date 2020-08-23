@@ -46,7 +46,7 @@ class ExampleOperator(bpy.types.Operator):
     def set_status(self, context):
         def status(header, context):
             layout = header.layout
-            layout.label(text=f'Offset: {self.offset:.3}', icon='MOUSE_MOVE')
+            layout.label(text=f'Offset: {self.offset:.2f}', icon='MOUSE_MOVE')
             layout.label(text=f'Axis: {self.axis}', icon='EVENT_X')
             layout.label(text='Error', icon='EVENT_Z')
             utils.ui.statistics(header, context)
@@ -57,7 +57,7 @@ class ExampleOperator(bpy.types.Operator):
     def set_header(self, context):
         header = utils.ui.header(
             f'Axis: {self.axis}',
-            f'Offset: {self.offset:.3}',
+            f'Offset: {self.offset:.2f}',
         )
 
         context.area.header_text_set(header)
