@@ -171,10 +171,21 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def draw_callback_2d(self, context):
-        font_id = 0
-        blf.position(font_id, 15, 30, 0)
-        blf.size(font_id, 20, 72)
-        blf.draw(font_id, context.object.name)
+        text = [
+            ('Move Mouse', 'Adjust Offset'),
+            ('X', 'Change Axis'),
+            ('Z', 'Cause Error'),
+        ]
+
+        utils.draw_2d.draw_text(text, 0, 20, 100, 100, 'LEFT', 'BOTTOM')
+
+        text = [
+            ('Offset', f'{self.offset:.2f}'),
+            ('Axis', f'{self.axis}'),
+            ('Checkbox', f'{self.checkbox}'),
+        ]
+
+        utils.draw_2d.draw_text(text, 0, 20, context.area.width - 100, 100, 'RIGHT', 'BOTTOM')
 
 
     def draw_callback_3d(self, context):
