@@ -2,6 +2,14 @@ import bpy, bgl, blf, gpu, gpu_extras
 from .. import utils
 
 
+# This operator is meant to show some options; you don't have to use all of them.
+# For example I wouldn't put actual values in the status bar if they're also in the header.
+# And I wouldn't bother with status and header at all if I was using a 2D draw handler.
+# I rarely use 3D draw handlers because they're usually not worth the effort.
+# I would use bl_description instead of the classmethod if the tooltip was static.
+# And I wouldn't use the safety decorator if there was nothing to clean up.
+
+
 class ExampleOperator(bpy.types.Operator):
     bl_idname = 'example.example_operator'
     bl_label = 'Example Operator'
@@ -38,7 +46,6 @@ class ExampleOperator(bpy.types.Operator):
     def description(cls, context, properties):
         return utils.ui.description(
             'Example modal operator that moves the active object',
-            'Use bl_description if your tooltip is static',
             f'Axis: {properties.axis}',
         )
 
