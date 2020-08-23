@@ -19,8 +19,8 @@ def draw_text(text, font, size, x, y, horizontal, vertical):
     widths_l = [blf.dimensions(font, line[0])[0] for line in text]
     widths_r = [blf.dimensions(font, line[1])[0] for line in text]
 
-    height = blf.dimensions(font, 'A')[1] * 1.5
-    space = height * 0.75
+    height = blf.dimensions(font, 'A')[1] * 2
+    space = height * 0.5
     y += height * 0.25
 
     if horizontal == 'LEFT':
