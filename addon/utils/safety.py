@@ -3,6 +3,18 @@ import functools
 
 
 def respond(self, context, event=None):
+    '''
+    Try to call self.cancel and self.report the traceback.
+
+    Args:
+        self: Operator instance.
+        context: Current blender context.
+        event: Unused.
+
+    Returns:
+        result: {'CANCELLED'}.
+    '''
+
     try:
         self.cancel(context)
     except:
@@ -14,6 +26,16 @@ def respond(self, context, event=None):
 
 
 def decorator(method):
+    '''
+    Wrap this method in a try block.
+
+    Args:
+        method: Operator method invoke, modal, or execute.
+
+    Returns:
+        wrapper: Wrapped operator method.
+    '''
+
     wraps = functools.wraps(method)
 
     def wrapper(*args):

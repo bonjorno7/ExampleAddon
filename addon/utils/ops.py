@@ -2,6 +2,13 @@ import bpy
 
 
 def cursor_warp(event):
+    '''
+    Warp the cursor to keep it inside the active area.
+    
+    Args:
+        event: Modal operator event.
+    '''
+
     area = bpy.context.area
     prefs = bpy.context.preferences
     offset = prefs.view.ui_scale * 200
