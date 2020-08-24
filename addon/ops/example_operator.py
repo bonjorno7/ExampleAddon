@@ -178,8 +178,10 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def draw_callback_2d(self, context):
-        offset = 100
-        size = 12
+        scale = context.preferences.view.ui_scale
+
+        offset = round(100 * scale)
+        size = round(14 * scale)
 
         font = 0
         shadow = True
