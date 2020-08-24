@@ -178,13 +178,20 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def draw_callback_2d(self, context):
+        offset = 100
+        size = 12
+
+        font = 0
+        shadow = True
+
         text = [
             ('Move Mouse', 'Adjust Offset'),
             ('X', 'Change Axis'),
             ('Z', 'Cause Error'),
         ]
 
-        utils.draw_2d.draw_text(text, 0, 20, 100, 100, 'LEFT', 'BOTTOM')
+        x, y = offset, offset
+        utils.draw_2d.draw_text(text, font, size, x, y, 'LEFT', 'BOTTOM', shadow)
 
         text = [
             ('Offset', f'{self.offset:.2f}'),
@@ -192,7 +199,8 @@ class ExampleOperator(bpy.types.Operator):
             ('Checkbox', f'{self.checkbox}'),
         ]
 
-        utils.draw_2d.draw_text(text, 0, 20, context.area.width - 100, 100, 'RIGHT', 'BOTTOM')
+        x, y = context.area.width - offset, offset
+        utils.draw_2d.draw_text(text, font, size, x, y, 'RIGHT', 'BOTTOM', shadow)
 
 
     def draw_callback_3d(self, context):
