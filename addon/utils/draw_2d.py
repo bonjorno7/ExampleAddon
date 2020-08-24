@@ -16,7 +16,7 @@ def draw_text(text, font, size, x, y, horizontal, vertical, shadow):
         shadow: Whether to add a dropshadow.
     '''
 
-    blf.size(font, size, bpy.context.preferences.system.dpi)
+    blf.size(font, size, 72)
     widths_l = [blf.dimensions(font, line[0])[0] for line in text]
     widths_r = [blf.dimensions(font, line[1])[0] for line in text]
 
