@@ -212,9 +212,11 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def draw_callback_3d(self, context):
+        scale = context.preferences.view.ui_scale
+
         bgl.glEnable(bgl.GL_BLEND)
         bgl.glEnable(bgl.GL_LINE_SMOOTH)
-        bgl.glLineWidth(2)
+        bgl.glLineWidth(2 * scale)
 
         shader = gpu.shader.from_builtin('3D_UNIFORM_COLOR')
         shader.bind()
