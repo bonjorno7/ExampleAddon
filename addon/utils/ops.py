@@ -11,7 +11,7 @@ def cursor_warp(event):
 
     area = bpy.context.area
     prefs = bpy.context.preferences
-    offset = prefs.view.ui_scale * 200
+    offset = prefs.view.ui_scale * 100
 
     left = area.x + offset
     right = area.x + area.width - offset
