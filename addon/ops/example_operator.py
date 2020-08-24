@@ -1,4 +1,6 @@
-import bpy, bgl, blf, gpu, gpu_extras
+import bpy, bmesh
+import bgl, blf
+import gpu, gpu_extras
 from .. import utils
 
 
@@ -90,6 +92,10 @@ class ExampleOperator(bpy.types.Operator):
         self.location = context.object.location.copy()
         self.buffer = 0
         self.offset = 0
+
+        color = context.preferences.themes[0].view_3d.object_active
+        self.color = (color.r, color.g, color.b, 1.0)
+        self.points = utils.draw_3d.wireframe(context.object, True)
 
         self.set_status(context)
         self.draw_handler_2d = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback_2d, (context, ), 'WINDOW', 'POST_PIXEL')
@@ -206,7 +212,17 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def draw_callback_3d(self, context):
-        font_id = 0
-        blf.position(font_id, 2, 2, 0)
-        blf.size(font_id, 20, 72)
-        blf.draw(font_id, context.object.name)
+        bgl.glEnable(bgl.GL_BLEND)
+        bgl.glEnable(bgl.GL_LINE_SMOOTH)
+        bgl.glLineWidth(2)
+
+        shader = gpu.shader.from_builtin('3D_UNIFORM_COLOR')
+        shader.bind()
+        shader.uniform_float('color', self.color)
+
+        batch = gpu_extras.batch.batch_for_shader(shader, 'LINES', {'pos': self.points})
+        batch.draw(shader)
+
+        bgl.glLineWidth(1)
+        bgl.glDisable(bgl.GL_LINE_SMOOTH)
+        bgl.glDisable(bgl.GL_BLEND)
