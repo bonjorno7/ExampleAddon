@@ -155,8 +155,8 @@ class ExampleOperator(bpy.types.Operator):
 
 
     def cancel(self, context):
-        self.restore(context)
         self.cleanup(context)
+        self.restore(context)
         return {'CANCELLED'}
 
 
