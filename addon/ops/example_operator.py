@@ -98,6 +98,7 @@ class ExampleOperator(bpy.types.Operator):
         self.points = utils.draw_3d.wireframe(context.object, True)
 
         self.set_status(context)
+        self.hud_info = utils.ops.hide_hud()
         self.draw_handler_2d = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback_2d, (context, ), 'WINDOW', 'POST_PIXEL')
         self.draw_handler_3d = bpy.types.SpaceView3D.draw_handler_add(self.draw_callback_3d, (context, ), 'WINDOW', 'POST_VIEW')
         context.window_manager.modal_handler_add(self)
@@ -180,6 +181,7 @@ class ExampleOperator(bpy.types.Operator):
         if getattr(self, 'draw_handler_3d', None):
             self.draw_handler_3d = bpy.types.SpaceView3D.draw_handler_remove(self.draw_handler_3d, 'WINDOW')
 
+        utils.ops.show_hud(self.hud_info)
         context.area.tag_redraw()
 
 
