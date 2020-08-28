@@ -37,15 +37,19 @@ def cursor_warp(event):
 
 def hide_hud():
     '''
-    Hide the sidebar and redo panel.
+    Hide the toolbar, sidebar, and redo panel.
 
     Returns:
-        hud_info: Two booleans, to be used with show_hud.
+        hud_info: Three booleans, to be used with show_hud.
     '''
 
     space_data = bpy.context.space_data
+    toolbar = space_data.show_region_toolbar
     sidebar = space_data.show_region_ui
     redo = space_data.show_region_hud
+
+    if toolbar:
+        space_data.show_region_toolbar = False
 
     if sidebar:
         space_data.show_region_ui = False
@@ -53,19 +57,22 @@ def hide_hud():
     if redo:
         space_data.show_region_hud = False
 
-    return sidebar, redo
+    return toolbar, sidebar, redo
 
 
 def show_hud(hud_info):
     '''
-    Show the sidebar and redo panel.
+    Show the toolbar, sidebar, and redo panel.
 
     Args:
-        hud_info: Two booleans, returned by hide_hud.
+        hud_info: Three booleans, returned by hide_hud.
     '''
 
-    sidebar, redo = hud_info
+    toolbar, sidebar, redo = hud_info
     space_data = bpy.context.space_data
+
+    if toolbar:
+        space_data.show_region_toolbar = True
 
     if sidebar:
         space_data.show_region_ui = True
