@@ -4,7 +4,7 @@ import functools
 
 def respond(self, context, event=None):
     '''
-    Try to call self.cancel and self.report the traceback.
+    Try to call self.cancel, then self.report and print the traceback.
 
     Args:
         self: Operator instance.
@@ -18,9 +18,12 @@ def respond(self, context, event=None):
     try:
         self.cancel(context)
     except:
-        self.report({'ERROR'}, traceback.format_exc())
+        message = traceback.format_exc()
     else:
-        self.report({'ERROR'}, traceback.format_exc())
+        message = traceback.format_exc()
+
+    self.report({'ERROR'}, message)
+    print(message)
 
     return {'CANCELLED'}
 
