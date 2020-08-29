@@ -2,55 +2,32 @@ import traceback
 import functools
 
 
-def respond(self, context, event=None):
-    '''
-    Try to call self.cancel, then self.report and print the traceback.
-
-    Args:
-        self: Operator instance.
-        context: Current blender context.
-        event: Unused.
-
-    Returns:
-        result: {'CANCELLED'}.
-    '''
-
-    try:
-        self.cancel(context)
-    except:
-        message = traceback.format_exc()
-    else:
-        message = traceback.format_exc()
-
-    self.report({'ERROR'}, message)
-    print(message)
-
-    return {'CANCELLED'}
-
-
 def decorator(method):
     '''
     Wrap this method in a try block.
 
     Args:
-        method: Operator method invoke, modal, or execute.
+        method: Operator invoke or modal.
 
     Returns:
         wrapper: Wrapped operator method.
     '''
 
-    wraps = functools.wraps(method)
-
-    def wrapper(*args):
+    @functools.wraps(method)
+    def wrapper(self, context, event):
         try:
-            return method(*args)
+            return method(self, context, event)
+
         except:
-            return respond(*args)
+            try:
+                self.cancel(context)
+            except:
+                message = traceback.format_exc()
+            else:
+                message = traceback.format_exc()
 
-    if method.__name__ in {'invoke', 'modal'}:
-        return wraps(lambda self, context, event: wrapper(self, context, event))
+            print(message)
+            self.report({'ERROR'}, message)
+            return {'CANCELLED'}
 
-    elif method.__name__ == 'execute':
-        return wraps(lambda self, context: wrapper(self, context))
-
-    raise Exception('This decorator is only for invoke, modal, and execute')
+    return wrapper
