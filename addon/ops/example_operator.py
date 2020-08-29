@@ -149,7 +149,6 @@ class ExampleOperator(bpy.types.Operator):
         return {'RUNNING_MODAL'}
 
 
-    @utils.safety.decorator
     def execute(self, context):
         index = 'XYZ'.index(self.axis)
         context.object.location[index] += self.offset
