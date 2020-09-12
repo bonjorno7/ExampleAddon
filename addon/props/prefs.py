@@ -14,4 +14,8 @@ class AddonPrefs(bpy.types.AddonPreferences):
     )
 
     def draw(self, context):
-        utils.ui.draw_prop(self.layout, 'Panel Category', self, 'panel_category')
+        layout = self.layout
+        layout.use_property_split = True
+        layout.use_property_decorate = False
+
+        layout.prop(self, 'panel_category')
