@@ -1,8 +1,9 @@
 import bpy
+import typing
 from .. import ui
 
 
-def update_panel_category(self, context):
+def update_panel_category(self: bpy.types.AddonPreferences, context: bpy.types.Context):
     '''
     Change the category for addon panels.
 
@@ -23,17 +24,17 @@ def update_panel_category(self, context):
             bpy.utils.register_class(cls)
 
 
-def description(*args):
+def description(*args: typing.List[str]):
     '''Join arguments with `.\n` between each.'''
     return '.\n'.join(args)
 
 
-def header(*args):
+def header(*args: typing.List[str]):
     '''Join arguments with ` | ` between each.'''
     return ' | '.join(args)
 
 
-def statistics(header, context):
+def statistics(header: bpy.types.Header, context: bpy.types.Context):
     '''
     Add scene statistics to the end of the status bar.
 

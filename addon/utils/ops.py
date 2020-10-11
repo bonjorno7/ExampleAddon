@@ -1,7 +1,8 @@
 import bpy
+import typing
 
 
-def cursor_warp(event):
+def cursor_warp(event: bpy.types.Event):
     '''
     Warp the cursor to keep it inside the active area.
     
@@ -35,7 +36,7 @@ def cursor_warp(event):
         bpy.context.window.cursor_warp(x, y)
 
 
-def hide_hud():
+def hide_hud() -> typing.Tuple[bool, bool, bool]:
     '''
     Hide the toolbar, sidebar, and redo panel.
 
@@ -60,7 +61,7 @@ def hide_hud():
     return toolbar, sidebar, redo
 
 
-def show_hud(hud_info):
+def show_hud(hud_info: typing.Tuple[bool, bool, bool]):
     '''
     Show the toolbar, sidebar, and redo panel.
 

@@ -1,8 +1,9 @@
 import bpy
 import bmesh
+import typing
 
 
-def wireframe(obj, evaluated):
+def wireframe(obj: bpy.types.Object, evaluated: bool) -> typing.List[typing.Tuple[float, float, float]]:
     '''
     Get coords of verts for edges of an object.
 

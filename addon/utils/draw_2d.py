@@ -2,7 +2,7 @@ import bpy
 import blf
 
 
-def draw_text(text, font, size, x, y, horizontal, vertical, shadow):
+def draw_text(text: str, font: int, size: int, x: int, y: int, horizontal: str, vertical: str, shadow: bool):
     '''
     Draw two aligned columns of text.
 
