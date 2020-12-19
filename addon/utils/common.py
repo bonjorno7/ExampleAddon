@@ -1,7 +1,6 @@
 import bpy
 import pathlib
 import platform
-import ctypes.wintypes
 from .. import props
 
 
@@ -32,8 +31,8 @@ def sanitize(text: str) -> str:
 def documents() -> pathlib.Path:
     '''Get the documents folder on Windows, or the home folder on other platforms.'''
     if platform.system() == 'Windows':
+        import ctypes.wintypes
         buf = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-
         ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 1, buf)
         return pathlib.Path(buf.value)
 
