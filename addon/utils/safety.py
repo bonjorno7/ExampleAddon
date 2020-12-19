@@ -2,7 +2,7 @@ import traceback
 import functools
 
 
-def decorator(method: function) -> function:
+def decorator(method):
     '''
     Wrap this method in a try block.
 
